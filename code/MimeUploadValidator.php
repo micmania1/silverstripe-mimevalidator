@@ -56,7 +56,7 @@ class MimeUploadValidator extends Upload_Validator {
 	 * @return array
 	 */
 	public function getExpectedMimeTypes($tmpFile) {
-		$extension = pathinfo($tmpFile['name'], PATHINFO_EXTENSION);
+		$extension = strtolower(pathinfo($tmpFile['name'], PATHINFO_EXTENSION));
 
 		// we can't check filenames without an extension or no temp file path, let them pass validation.
 		if(!$extension || !$tmpFile['tmp_name']) return true;
@@ -104,7 +104,7 @@ class MimeUploadValidator extends Upload_Validator {
 	 * @return boolean
 	 */
 	public function compareMime($first, $second) {
-		return preg_replace($this->filterPattern, '', $first) == preg_replace($this->filterPattern, '', $second);
+		return preg_replace($this->filterPattern, '', $first) === preg_replace($this->filterPattern, '', $second);
 	}
 
 	public function validate() {
